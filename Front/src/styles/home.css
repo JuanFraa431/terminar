@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+}
+
+
+.home-container {
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.home-header {
+    max-width: 1200px;
+    margin: 0 auto 2rem auto;
+}
+
+.home-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.home-header p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    grid-auto-flow: dense;
+    align-items: start;
+}
+
+.note-card {
+    position: relative;
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 120px;
+    break-inside: avoid;
+}
+
+.note-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.note-card h2 {
+    font-size: 1.25rem;
+    color: #222;
+    margin-bottom: 0.5rem;
+}
+
+.note-card p {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.note-footer {
+    margin-top: 1rem;
+    text-align: right;
+}
+
+.note-footer button {
+    background: none;
+    border: none;
+    color: #0066cc;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0;
+}
+
+.note-footer button:hover {
+    text-decoration: underline;
+}
+
+.crear-nota-btn {
+    padding: 0.7rem 1.5rem;
+    background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-left: 1rem;
+}
+
+.crear-nota-btn:hover {
+    background: linear-gradient(90deg, #0056b3 0%, #009ec3 100%);
+    transform: translateY(-2px) scale(1.04);
+}
+
+
+.editar-nota-btn {
+    padding: 0.4rem 1rem;
+    background: #f0ad4e;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+}
+
+.editar-nota-btn:hover {
+    background: #ec971f;
+    transform: scale(1.05);
+}
+
+
+.etiqueta-chip {
+    display: inline-block;
+    background: #e3e3e3;
+    color: #444;
+    border-radius: 12px;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.85rem;
+    margin-right: 0.4rem;
+    margin-bottom: 0.2rem;
+}
+
+.etiqueta-vacia {
+    background: #f8d7da;
+    color: #a94442;
+}
+
+.swal2-popup-custom {
+    border-radius: 18px !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.swal2-confirm-custom {
+    background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%) !important;
+    color: #fff !important;
+    font-weight: bold !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+}
+
+.swal2-cancel-custom {
+    background: #f0ad4e !important;
+    color: #fff !important;
+    font-weight: bold !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+}
+
+.archivada-badge {
+    position: absolute;
+    top: 0.7rem;
+    background: linear-gradient(90deg, #6c757d 60%, #adb5bd 100%);
+    color: #fff;
+    padding: 0.15em 1em;
+    border-radius: 20px 2px 0 8px;
+    font-size: 0.92em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+    z-index: 2;
+}
+
+.eliminar-nota-btn {
+    padding: 0.4rem 1rem;
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-left: 0.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eliminar-nota-btn:hover {
+    background: #b52a37;
+    transform: scale(1.05);
+}
+
+/*
+  Masonry con react-masonry-css: restaurar estilos correctos para Masonry layout
+*/
+.notes-masonry-grid {
+  display: flex;
+  margin-left: -1.5rem;
+  width: 100%;
+  max-width: 1200px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+.notes-masonry-grid_column {
+  padding-left: 1.5rem;
+  background-clip: padding-box;
+}
+
+.notes-masonry-grid_column > .note-card {
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .notes-masonry-grid {
+    margin-left: -1rem;
+  }
+  .notes-masonry-grid_column {
+    padding-left: 1rem;
+  }
+  .notes-masonry-grid_column > .note-card {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 700px) {
+    .notes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+}
+
+@media (min-width: 1000px) {
+    .notes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    }
+}
