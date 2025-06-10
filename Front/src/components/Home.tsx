@@ -3,6 +3,7 @@ import '../styles/home.css';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Masonry from 'react-masonry-css';
+import FiltroEtiqueta from './FiltroEtiqueta';
 
 interface Etiqueta {
     id: number;
@@ -24,6 +25,7 @@ export default function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [mostrarArchivadas, setMostrarArchivadas] = useState(false);
+    const [etiquetaSeleccionada, setEtiquetaSeleccionada] = useState<Etiqueta | null>(null);
 
     useEffect(() => {
         fetch('/api/notas')
@@ -45,13 +47,24 @@ export default function Home() {
         const { value: formValues } = await MySwal.fire({
             title: 'Crear nueva nota',
             html:
-                '<label for="swal-input-titulo">Título</label>' +
-                '<input id="swal-input-titulo" class="swal2-input" placeholder="Título">' +
-                '<label for="swal-input-contenido">Contenido</label>' +
-                '<textarea id="swal-input-contenido" class="swal2-textarea" placeholder="Contenido"></textarea>' +
-                '<label for="swal-input-etiquetas">Etiquetas (separadas por coma)</label>' +
-                '<input id="swal-input-etiquetas" class="swal2-input" placeholder="Ej: trabajo, personal">' +
-                '<div style="margin-top:0.5em;text-align:left"><input type="checkbox" id="swal-input-archivada"> <label for="swal-input-archivada">Archivada</label></div>',
+                `
+                    <div style="width:600px;">
+                        <label for="swal-input-titulo" style="font-weight:600;">Título</label>
+                        <input id="swal-input-titulo" class="swal2-input" placeholder="Título" style="width:100%;margin-top:0.3em;">
+                    </div>
+                    <div>
+                        <label for="swal-input-contenido" style="font-weight:600;">Contenido</label>
+                        <textarea id="swal-input-contenido" class="swal2-textarea" placeholder="Contenido" style="width:100%;margin-top:0.3em;height:120px;resize:vertical;"></textarea>
+                    </div>
+                    <div>
+                        <label for="swal-input-etiquetas" style="font-weight:600;">Etiquetas (separadas por coma)</label>
+                        <input id="swal-input-etiquetas" class="swal2-input" placeholder="Ej: trabajo, personal" style="width:100%;margin-top:0.3em;">
+                    </div>
+                    <div style="margin-top:0.5em;">
+                        <input type="checkbox" id="swal-input-archivada" style="margin-right:0.5em;">
+                        <label for="swal-input-archivada">Archivada</label>
+                    </div>
+                `,
             focusConfirm: false,
             showCancelButton: true,
             confirmButtonText: 'Crear',
@@ -99,13 +112,24 @@ export default function Home() {
         const { value: formValues } = await MySwal.fire({
             title: 'Editar nota',
             html:
-                `<label for="swal-input-titulo">Título</label>` +
-                `<input id="swal-input-titulo" class="swal2-input" placeholder="Título" value="${nota.titulo}">` +
-                `<label for="swal-input-contenido">Contenido</label>` +
-                `<textarea id="swal-input-contenido" class="swal2-textarea" placeholder="Contenido">${nota.contenido}</textarea>` +
-                `<label for="swal-input-etiquetas">Etiquetas (separadas por coma)</label>` +
-                `<input id="swal-input-etiquetas" class="swal2-input" placeholder="Ej: trabajo, personal" value="${etiquetasString}">` +
-                `<div style="margin-top:0.5em;text-align:left"><input type="checkbox" id="swal-input-archivada" ${nota.archivada ? 'checked' : ''}> <label for="swal-input-archivada">Archivada</label></div>`,
+                `<div style="display:flex;flex-direction:column;gap:1rem;text-align:left;min-width:450px;max-width:600px;width:100%;">
+                    <div>
+                        <label for="swal-input-titulo" style="font-weight:600;">Título</label>
+                        <input id="swal-input-titulo" class="swal2-input" placeholder="Título" value="${nota.titulo}" style="width:100%;margin-top:0.3em;">
+                    </div>
+                    <div>
+                        <label for="swal-input-contenido" style="font-weight:600;">Contenido</label>
+                        <textarea id="swal-input-contenido" class="swal2-textarea" placeholder="Contenido" style="width:100%;margin-top:0.3em;height:120px;resize:vertical;">${nota.contenido}</textarea>
+                    </div>
+                    <div>
+                        <label for="swal-input-etiquetas" style="font-weight:600;">Etiquetas (separadas por coma)</label>
+                        <input id="swal-input-etiquetas" class="swal2-input" placeholder="Ej: trabajo, personal" value="${etiquetasString}" style="width:100%;margin-top:0.3em;">
+                    </div>
+                    <div style="margin-top:0.5em;">
+                        <input type="checkbox" id="swal-input-archivada" ${nota.archivada ? 'checked' : ''} style="margin-right:0.5em;">
+                        <label for="swal-input-archivada">Archivada</label>
+                    </div>
+                </div>`,
             focusConfirm: false,
             showCancelButton: true,
             confirmButtonText: 'Guardar',
@@ -173,9 +197,14 @@ export default function Home() {
         }
     };
 
-    const notasFiltradas = mostrarArchivadas
+    const notasFiltradas = (mostrarArchivadas
         ? notas.filter(n => n.archivada)
-        : notas.filter(n => !n.archivada);
+        : notas.filter(n => !n.archivada)
+    ).filter(nota =>
+        !etiquetaSeleccionada
+            ? true
+            : nota.etiquetas.some(e => e.id === etiquetaSeleccionada.id)
+    );
 
     const breakpointColumnsObj = {
         default: 4,
@@ -197,6 +226,10 @@ export default function Home() {
                         <p>Organizá tus pensamientos y tareas.</p>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <FiltroEtiqueta
+                            onEtiquetaSeleccionada={setEtiquetaSeleccionada}
+                            etiquetaSeleccionada={etiquetaSeleccionada}
+                        />
                         <button className="crear-nota-btn" onClick={handleCrearNota}>+ Crear Nota</button>
                         <button
                             style={{
