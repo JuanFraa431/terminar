@@ -7,12 +7,14 @@ coverage
 # dependency directory
 **/node_modules/
 
+
 # OS metadata
 .DS_Store
 Thumbs.db
 
 # ignore built ts files
 **/dist
+
 
 # vscode
 .vscode/*
