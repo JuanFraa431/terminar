@@ -26,7 +26,7 @@ export default function Home() {
     const [error, setError] = useState<string | null>(null);
     const [mostrarArchivadas, setMostrarArchivadas] = useState(false);
     const [etiquetaSeleccionada, setEtiquetaSeleccionada] = useState<Etiqueta | null>(null);
-
+    const [etiquetasActualizadas, setEtiquetasActualizadas] = useState(0); 
     useEffect(() => {
         fetch('/api/notas')
             .then(res => {
@@ -100,6 +100,7 @@ export default function Home() {
                 if (!res.ok) throw new Error('Error al crear nota');
                 const nuevaNota = await res.json();
                 setNotas(prev => [...prev, nuevaNota]);
+                setEtiquetasActualizadas(e => e + 1);
                 Swal.fire('¡Nota creada!', '', 'success');
             } catch (err) {
                 Swal.fire('Error', 'No se pudo crear la nota', 'error');
@@ -229,6 +230,7 @@ export default function Home() {
                         <FiltroEtiqueta
                             onEtiquetaSeleccionada={setEtiquetaSeleccionada}
                             etiquetaSeleccionada={etiquetaSeleccionada}
+                            key={etiquetasActualizadas}
                         />
                         <button className="crear-nota-btn" onClick={handleCrearNota}>+ Crear Nota</button>
                         <button
