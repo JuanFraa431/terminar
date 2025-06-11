@@ -1,6 +1,14 @@
 @echo off
 echo Instalando dependencias y ejecutando servidores...
 
+
+if not exist "node_modules" (
+    echo Instalando dependencias de la RAIZ...
+    call npm install
+) else (
+    echo Dependencias de la RAIZ ya instaladas.
+)
+
 if not exist "Back\node_modules" (
     echo Instalando dependencias del BACKEND...
     pushd Back
