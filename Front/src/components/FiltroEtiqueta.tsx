@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import '../styles/filtroEtiquetas.css';
 
 interface Etiqueta {
     id: number;
@@ -43,66 +44,27 @@ export default function FiltroEtiqueta({ onEtiquetaSeleccionada, etiquetaSelecci
     );
 
     return (
-        <div style={{ position: 'relative', display: 'inline-block' }} ref={ref}>
+        <div className="filtro-etiqueta-container" ref={ref}>
             <button
                 type="button"
                 onClick={() => setAbierto(a => !a)}
-                style={{
-                    padding: '0.5em 1.2em',
-                    borderRadius: 8,
-                    border: '1px solid #007bff',
-                    background: '#fff',
-                    color: '#007bff',
-                    fontWeight: 'bold',
-                    fontSize: '1em',
-                    cursor: 'pointer',
-                    boxShadow: abierto ? '0 2px 8px rgba(0,0,0,0.10)' : 'none',
-                    transition: 'box-shadow 0.2s'
-                }}
+                className={`filtro-etiqueta-boton${abierto ? ' abierto' : ''}`}
             >
                 {etiquetaSeleccionada ? `Etiqueta: ${etiquetaSeleccionada.nombre}` : 'Filtrar por etiqueta'}
             </button>
             {abierto && (
-                <div
-                    style={{
-                        position: 'absolute',
-                        top: '110%',
-                        left: 0,
-                        zIndex: 20,
-                        minWidth: 220,
-                        background: '#fff',
-                        border: '1px solid #eee',
-                        borderRadius: 10,
-                        boxShadow: '0 4px 16px rgba(0,0,0,0.13)',
-                        padding: 12,
-                        marginTop: 4
-                    }}
-                >
+                <div className="filtro-etiqueta-dropdown">
                     <input
                         type="text"
                         placeholder="Buscar etiqueta..."
                         value={busqueda}
                         autoFocus
                         onChange={e => setBusqueda(e.target.value)}
-                        style={{
-                            width: '100%',
-                            padding: '0.4em 0.7em',
-                            borderRadius: 8,
-                            border: '1px solid #ccc',
-                            marginBottom: 8,
-                            fontSize: '1em'
-                        }}
+                        className="filtro-etiqueta-input"
                     />
-                    <div style={{ maxHeight: 160, overflowY: 'auto' }}>
+                    <div className="filtro-etiqueta-lista">
                         <div
-                            style={{
-                                padding: '0.3em 0.7em',
-                                cursor: 'pointer',
-                                background: etiquetaSeleccionada === null ? '#e9ecef' : 'transparent',
-                                borderRadius: 6,
-                                marginBottom: 2,
-                                fontWeight: etiquetaSeleccionada === null ? 'bold' : 'normal'
-                            }}
+                            className={`filtro-etiqueta-item todas${etiquetaSeleccionada === null ? ' seleccionada' : ''}`}
                             onClick={() => {
                                 onEtiquetaSeleccionada(null);
                                 setAbierto(false);
@@ -113,14 +75,7 @@ export default function FiltroEtiqueta({ onEtiquetaSeleccionada, etiquetaSelecci
                         {etiquetasFiltradas.map(etiqueta => (
                             <div
                                 key={etiqueta.id}
-                                style={{
-                                    padding: '0.3em 0.7em',
-                                    cursor: 'pointer',
-                                    background: etiquetaSeleccionada?.id === etiqueta.id ? '#007bff22' : 'transparent',
-                                    borderRadius: 6,
-                                    marginBottom: 2,
-                                    fontWeight: etiquetaSeleccionada?.id === etiqueta.id ? 'bold' : 'normal'
-                                }}
+                                className={`filtro-etiqueta-item${etiquetaSeleccionada?.id === etiqueta.id ? ' seleccionada' : ''}`}
                                 onClick={() => {
                                     onEtiquetaSeleccionada(etiqueta);
                                     setAbierto(false);

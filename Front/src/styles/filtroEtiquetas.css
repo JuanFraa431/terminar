@@ -1,0 +1,65 @@
+.filtro-etiqueta-container {
+    position: relative;
+    display: inline-block;
+}
+
+.filtro-etiqueta-boton {
+    padding: 0.5em 1.2em;
+    border-radius: 8px;
+    border: 1px solid #007bff;
+    background: #fff;
+    color: #007bff;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+
+.filtro-etiqueta-boton.abierto {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+}
+
+.filtro-etiqueta-dropdown {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    z-index: 20;
+    min-width: 220px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
+    padding: 12px;
+    margin-top: 4px;
+}
+
+.filtro-etiqueta-input {
+    width: 100%;
+    padding: 0.4em 0.7em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+.filtro-etiqueta-lista {
+    max-height: 160px;
+    overflow-y: auto;
+}
+
+.filtro-etiqueta-item {
+    padding: 0.3em 0.7em;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 2px;
+}
+
+.filtro-etiqueta-item.todas {
+    background: #e9ecef;
+    font-weight: bold;
+}
+
+.filtro-etiqueta-item.seleccionada {
+    background: #007bff22;
+    font-weight: bold;
+}
