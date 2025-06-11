@@ -1,27 +1,25 @@
 @echo off
 echo Instalando dependencias y ejecutando servidores...
 
-cd Back
-if not exist node_modules (
-  echo Instalando dependencias del BACKEND...
-  npm install || goto error
+if not exist "Back\node_modules" (
+    echo Instalando dependencias del BACKEND...
+    pushd Back
+    call npm install
+    popd
+) else (
+    echo Dependencias del BACKEND ya instaladas.
 )
-cd ..
 
-cd Front
-if not exist node_modules (
-  echo Instalando dependencias del FRONTEND...
-  npm install || goto error
+if not exist "Front\node_modules" (
+    echo Instalando dependencias del FRONTEND...
+    pushd Front
+    call npm install
+    popd
+) else (
+    echo Dependencias del FRONTEND ya instaladas.
 )
-cd ..
 
 echo Levantando servidores...
-npx concurrently "npm run startBack --prefix Back" "npm run startFront --prefix Front" || goto error
+npx concurrently "npm run startBack --prefix Back" "npm run startFront --prefix Front"
 
 pause
-exit
-
-:error
-echo ❌ Ocurrió un error. Revisá si tenés Node.js instalado correctamente.
-pause
-exit
